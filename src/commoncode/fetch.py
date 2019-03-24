@@ -70,18 +70,3 @@ def download_url(url, file_name=None, verify=True, timeout=10):
         out.write(response.content)
 
     return output_file
-
-
-def ping_url(url):
-    """
-    Returns True is `url` is reachable.
-    """
-    import urllib2
-
-    # FIXME: if there is no 200 HTTP status, then the ULR may not be reachable.
-    try:
-        urllib2.urlopen(url)
-    except Exception:
-        return False
-    else:
-        return True
