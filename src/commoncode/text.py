@@ -35,13 +35,8 @@ import unicodedata
 import chardet
 from text_unidecode import unidecode
 
-# Python 2 and 3 support
-try:
-    # Python 2
-    unicode
-except NameError:
-    # Python 3
-    unicode = str  # NOQA
+from commoncode import compat
+
 
 """
 A text processing module providing functions to process and prepare text
@@ -220,7 +215,7 @@ def as_unicode(s):
     if not s:
         return s
 
-    if isinstance(s, unicode):
+    if isinstance(s, compat.unicode):
         return s
 
     try:
@@ -234,7 +229,7 @@ def as_unicode(s):
         except UnicodeDecodeError:
                 pass
         s = toascii(s, translit=True)
-        if not isinstance(s, unicode):
-            s = unicode(s)
+        if not isinstance(s, compat.unicode):
+            s = compat.unicode(s)
         return s
 

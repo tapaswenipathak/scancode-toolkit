@@ -29,6 +29,7 @@ from __future__ import unicode_literals
 from collections import defaultdict
 from collections import OrderedDict
 import io
+from itertools import chain
 import os
 from os.path import abspath
 from os.path import join
@@ -42,15 +43,8 @@ from license_expression import Licensing
 from commoncode import fileutils
 from commoncode import saneyaml
 from commoncode import text
-from itertools import chain
+from commoncode import compat
 
-# Python 2 and 3 support
-try:
-    # Python 2
-    unicode
-except NameError:
-    # Python 3
-    unicode = str  # NOQA
 
 TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), 'data/licenses')
 
@@ -241,7 +235,7 @@ def make_test(license_test, regen=False):
     license_test LicenseTest object.
     """
     test_name = license_test.get_test_method_name()
-    if isinstance(test_name, unicode):
+    if isinstance(test_name, compat.unicode):
         test_name = test_name.encode('utf-8')
 
     from licensedcode import cache
@@ -298,7 +292,6 @@ def make_test(license_test, regen=False):
             assert expected_expressions == failure_trace
 
     closure_test_function.__name__ = test_name
-    closure_test_function.funcname = test_name
 
     if expected_failure:
         closure_test_function = unittest.expectedFailure(closure_test_function)

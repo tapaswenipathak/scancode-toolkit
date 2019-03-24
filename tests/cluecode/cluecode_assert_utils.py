@@ -40,6 +40,7 @@ import cluecode.copyrights
 from commoncode import saneyaml
 from commoncode.testcase import FileDrivenTesting
 from commoncode.text import python_safe_name
+from commoncode import compat
 
 """
 Data-driven Copyright test utilities.
@@ -314,7 +315,7 @@ def make_copyright_test_functions(test, test_data_dir=test_env.test_data_dir, re
     whats = '_'.join(what)
     test_name = 'test_%(whats)s_%(tfn)s' % locals()
     test_name = python_safe_name(test_name)
-    if isinstance(test_name, unicode):
+    if isinstance(test_name, compat.unicode):
         test_name = test_name.encode('utf-8')
 
     closure_test_function.__name__ = test_name
